@@ -1,0 +1,19 @@
+[debug] [2025-11-24T14:17:44.029Z] ----------------------------------------------------------------------
+[debug] [2025-11-24T14:17:44.033Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\aahmedse\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2025-11-24T14:17:44.033Z] CLI Version:   14.26.0
+[debug] [2025-11-24T14:17:44.033Z] Platform:      win32
+[debug] [2025-11-24T14:17:44.033Z] Node Version:  v24.8.0
+[debug] [2025-11-24T14:17:44.033Z] Time:          Mon Nov 24 2025 15:17:44 GMT+0100 (Central European Standard Time)
+[debug] [2025-11-24T14:17:44.033Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\aahmedse\OneDrive - Capgemini\Documents\Sogeti_Learn\Training_Projects\expense-tracker-app
+
