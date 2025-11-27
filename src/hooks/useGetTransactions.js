@@ -1,6 +1,6 @@
 import { onSnapshot, orderBy, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { collection, query, where } from "firebase/firestore";
+import { collection, query } from "firebase/firestore";
 import {db} from "../config/firebase-config.js";
 import { useGetUserInfo } from "./useGetUserInfo.js";
 export const useGetTransactions = () => {
@@ -11,13 +11,15 @@ export const useGetTransactions = () => {
 
 
     const getTransactions = async () => {
+                   let unsubscribe;
+
         try {
             const queryTransactions = query(
                 transactionsCollectionRef,
                 where("userID", "==", userID),
                 orderBy("createdAt")
             );
-            onSnapshot(queryTransactions, (snapshot) => {
+             unsubscribe = onSnapshot(queryTransactions, (snapshot) => {
                 let docs = [];
                 snapshot.forEach((doc) => {
                     const data = doc.data();
@@ -31,9 +33,10 @@ export const useGetTransactions = () => {
         } catch (error) {
             console.error(error);
         }
-    }
+        return () => unsubscribe();
+    };
     useEffect(() => {
-        getTransactions()
-    }, [])
+        getTransactions();
+    }, []);
     return { transactions };
 }
