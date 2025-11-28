@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { signOut } from 'firebase/auth';
-
+import { useNavigate } from 'react-router-dom';
 import { useAddTransaction } from "../../hooks/useAddTransactions";
 import { useGetTransactions } from "../../hooks/useGetTransactions";
 import { useGetUserInfo } from '../../hooks/useGetUserInfo';
 
 import "./styles.css";
 import { auth } from '../../config/firebase-config.js';
+import { navigate } from 'react-router-dom';
 export const ExpenseTracker = () => {
-    const { transactions } = useGetTransactions();
+    const { transactions, transactionTotals } = useGetTransactions();
     const {addTransaction} = useAddTransaction();
     const {name, profilePhoto} = useGetUserInfo();
 
     const [description, setDescription] = useState("");
+    const navigate = useNavigate();
     const [transactionAmount, setTransactionAmount] = useState(0);
     const [transactionType, setTransactionType] = useState("expense");
+
+    const {balance, income, expenses} = transactionTotals;
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -25,7 +29,13 @@ export const ExpenseTracker = () => {
         });
     };
     const signUserOut = async () => {
-       await signOut(auth);
+        try {
+         await signOut(auth);
+         localStorage.clear();
+         navigate("/");
+        } catch (error) {
+            console.error("Error signing out user:", error);
+        }
     };
   return(
   <>
@@ -34,12 +44,12 @@ export const ExpenseTracker = () => {
             <h1> {name}'s Expense Tracker</h1>
             <div className="balance"></div>
             <h3>Your Balance</h3>
-            <h2>$0.00</h2>
+            <h2>${balance}</h2>
         </div>
         <div className="summary">
         <div className="income">
             <h4>Income</h4>
-            <p>$0.00</p>
+            <p>${income}</p>
             </div>
             <div className="expenses">
             <h4>Expenses</h4>
@@ -96,7 +106,7 @@ export const ExpenseTracker = () => {
                     <h4> {description} </h4>
                     <p>
                         {" "}
-                        ${transactionAmount} . <label style={{color: transactionType == "expense" ? "red" : "green"}}> {transactionType}</label>
+                        ${transactionAmount} . <label style={{color: transactionType === "expense" ? "red" : "green"}}> {transactionType}</label>
                     </p>
                 </li>
             );
